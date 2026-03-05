@@ -33,35 +33,55 @@ async function carregarBiblia() {
     }
 }
 
-async function trocarVersao() {
-    versaoAtual = document.getElementById('select-versao').value;
-    localStorage.setItem('versao', versaoAtual);
-    document.getElementById('texto-biblico').innerText = "Carregando tradução...";
+// 1. Variáveis globais para "travar" o sorteio
+let desafioSorteado = null;
+let referenciaSorteada = null;
+
+// 2. Modifique sua função de carregar a página para sortear apenas UMA vez
+window.onload = async () => {
+    document.getElementById('select-versao').value = versaoAtual;
     await carregarBiblia();
-    popularLivros();
-    atualizarTudo();
-}
-
-// --- LÓGICA DA IA E ATUALIZAÇÃO ---
-function atualizarTudo() {
-    if (!bibliaCache) return;
-
-    // Sorteio da IA
+    
+    // Realiza o sorteio único ao abrir o app
     const acao = iaAcoes[Math.floor(Math.random() * iaAcoes.length)];
     const alvo = iaAlvos[Math.floor(Math.random() * iaAlvos.length)];
     const tema = iaTemas[Math.floor(Math.random() * iaTemas.length)];
-    const ref = versiculosIA[Math.floor(Math.random() * versiculosIA.length)];
-
-    // Define os textos na tela
-    document.getElementById('titulo-desafio').innerText = "Desafio do dia";
-    document.getElementById('desc-desafio').innerText = `${acao} ${alvo} ${tema}.`;
     
-    // Puxa o versículo do cache da Bíblia
-    const livro = bibliaCache[ref.l];
-    const texto = livro.chapters[ref.c][ref.v];
+    desafioSorteado = `${acao} ${alvo} ${tema}.`;
+    referenciaSorteada = versiculosIA[Math.floor(Math.random() * versiculosIA.length)];
+    
+    popularLivros();
+    atualizarTudo(); // Exibe o que foi sorteado acima
+    atualizarPlacar();
+    carregarTema();
+};
+
+// 3. Função de trocar versão ajustada (não sorteia mais)
+async function trocarVersao() {
+    versaoAtual = document.getElementById('select-versao').value;
+    localStorage.setItem('versao', versaoAtual);
+    
+    document.getElementById('texto-biblico').innerText = "Traduzindo...";
+    
+    await carregarBiblia();
+    // Removido popularLivros() daqui para não resetar o seletor de leitura técnica
+    atualizarTudo(); 
+}
+
+// 4. Função de exibição ajustada (apenas mostra os dados salvos)
+function atualizarTudo() {
+    if (!bibliaCache || !referenciaSorteada) return;
+
+    // Usa o desafio que foi guardado no window.onload
+    document.getElementById('titulo-desafio').innerText = "Desafio do dia";
+    document.getElementById('desc-desafio').innerText = desafioSorteado;
+    
+    // Puxa o texto da tradução nova usando a mesma referência sorteada antes
+    const livro = bibliaCache[referenciaSorteada.l];
+    const texto = livro.chapters[referenciaSorteada.c][referenciaSorteada.v];
     
     document.getElementById('texto-biblico').innerText = `"${texto}"`;
-    document.getElementById('referencia-biblica').innerText = `${livro.abbrev.toUpperCase()} ${ref.c + 1}:${ref.v + 1}`;
+    document.getElementById('referencia-biblica').innerText = `${livro.abbrev.toUpperCase()} ${referenciaSorteada.c + 1}:${referenciaSorteada.v + 1}`;
 }
 
 // --- HISTÓRICO E APRENDIZADO ---
@@ -458,34 +478,32 @@ function exportarBackup() {
 
 // Inicie a verificação ao carregar o app
 window.addEventListener('load', verificarLembreteBackup);
-function alternarTema() {
     const body = document.body;
-    const btn = document.getElementById('btn-tema');
-    
-    // Liga/Desliga a classe dark-mode
-    body.classList.toggle('dark-mode');
-    
-    // Salva a escolha
-    const modoEscuroAtivo = body.classList.contains('dark-mode');
-    localStorage.setItem('tema-escuro', modoEscuroAtivo);
-    
-    // Atualiza o texto do botão
-    btn.innerText = modoEscuroAtivo ? "☀️ Modo Claro" : "🌙 Modo Escuro";
-}
+  
 
-// Chame isso ao carregar a página para aplicar a preferência salva
-function carregarTema() {
-    const modoEscuroSalvo = localStorage.getItem('tema-escuro') === 'true';
-    const btn = document.getElementById('btn-tema');
+function mudarVersao(novaVersao) {
+    localStorage.setItem('versao_preferida', novaVersao);
     
-    if (modoEscuroSalvo) {
-        document.body.classList.add('dark-mode');
-        if(btn) btn.innerText = "☀️ Modo Claro";
+    // Pegue a referência do versículo atual que já está na tela
+    const versiculoAtual = document.getElementById('referencia-atual').innerText;
+    
+    if (versiculoAtual) {
+        // Chame APENAS a função que busca o texto, sem gerar novo desafio
+        buscarTextoBiblico(versiculoAtual, novaVersao);
     }
 }
+function gerarNovoDesafio() {
+    // 1. Sorteia novos valores para as variáveis globais
+    const acao = iaAcoes[Math.floor(Math.random() * iaAcoes.length)];
+    const alvo = iaAlvos[Math.floor(Math.random() * iaAlvos.length)];
+    const tema = iaTemas[Math.floor(Math.random() * iaTemas.length)];
+    
+    desafioSorteado = `${acao} ${alvo} ${tema}.`;
+    referenciaSorteada = versiculosIA[Math.floor(Math.random() * versiculosIA.length)];
 
-// Adicione carregarTema() dentro do seu window.onload
-window.addEventListener('load', () => {
-    carregarTema();
-    verificarLembreteBackup(); // Aquela função que fizemos antes
-});
+    // 2. Atualiza a tela com os novos dados
+    atualizarTudo();
+    
+    // 3. Opcional: Feedback visual de que mudou
+    console.log("Novo desafio gerado com sucesso!");
+}
