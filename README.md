@@ -40,12 +40,13 @@ Acesse o app agora:
    git clone [https://github.com/devgui324/caminhodiario.git](https://github.com/devgui324/caminhodiario.git)
 Abra o arquivo index.html no seu navegador.
 
-🛡️ Backup e Privacidade
+#🛡️ Backup e Privacidade
 Seus dados são 100% privados. Nenhuma informação de oração ou aprendizado é enviada para servidores externos. Tudo fica salvo no seu próprio dispositivo.
 
 O sistema emitirá um alerta visual caso você fique mais de 7 dias sem realizar um backup manual.
 
-📄 Licença
+#📄 Licença
 Este projeto está sob a licença MIT.
 
 <p align="center">Desenvolvido com ❤️ por <a href="https://www.google.com/search?q=https://github.com/devgui324">devgui324</a></p>
+
