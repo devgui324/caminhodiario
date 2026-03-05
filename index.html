@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caminho Diário</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" href="seu-icone.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a3a5f">
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("App pronto para instalação!"))
+        .catch((err) => console.log("Erro no SW:", err));
+    }
+    </script>
+</head>
+<body>
+<div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+    <button onclick="alternarTema()" id="btn-tema" class="btn-secondary" style="width: auto !important;">
+        🌙 Modo Escuro
+    </button>
+</div>
+<div class="card">
+    <h3>💾 Gerenciar Dados</h3>
+    
+    <div id="alerta-backup" style="display: none;">
+        <div class="alerta-box">
+            <span>⚠️</span>
+            <p>Você não faz backup há uma semana. Vamos garantir que seus dados estejam salvos?</p>
+        </div>
+    </div>
+
+    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+        Salve seus aprendizados e orações ou limpe tudo para recomeçar.
+    </p>
+    
+    <div style="display: flex; gap: 10px; flex-direction: column;">
+        <button onclick="exportarBackup()" class="btn-secondary">📤 Exportar Backup</button>
+        
+        <label for="import-file" class="btn-ia" style="text-align: center; display: block; margin-bottom: 0; cursor: pointer;">
+            📥 Importar Backup
+        </label>
+        <input type="file" id="import-file" style="display: none;" onchange="importarBackup(event)">
+
+        <button onclick="resetarTudo()" class="btn-reset">⚠️ Resetar Tudo</button>
+    </div>
+</div>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <img src="icone.png" alt="Logo" class="loading-logo">
+            <div class="spinner"></div>
+            <p>Preparando seu devocional...</p>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <div class="user-info">
+                <span id="status-fiel">🌱 Servo Esforçado</span>
+                <span class="points-badge"><span id="pontos">0</span> pts ✨</span>
+            </div>
+            <select id="select-versao" onchange="trocarVersao()">
+                <option value="nvi">NVI</option>
+                <option value="acf">ACF</option>
+                <option value="aa">ARA</option>
+            </select>
+        </header>
+
+        <nav class="tabs">
+            <button onclick="mostrarAba('hoje')" class="tab-btn active">Hoje</button>
+            <button onclick="mostrarAba('biblia')" class="tab-btn">Bíblia</button>
+            <button onclick="mostrarAba('historico')" class="tab-btn">Meu Histórico</button>
+        </nav>
+
+        <section id="aba-hoje" class="content-section">
+            <div class="card progress-card">
+                <div class="progress-info">
+                    <span id="label-nivel">Nível: 🌱 Servo Esforçado</span>
+                    <span id="percentual-progresso">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <small id="falta-quanto">Faltam 50 pts para o próximo nível</small>
+            </div>
+            <div class="card main-card">
+                <div class="badge">Desafio do Dia</div>
+                <h2 id="titulo-desafio">Carregando...</h2>
+                <p id="desc-desafio">...</p>
+                
+                <div class="versiculo-box">
+                    <p id="texto-biblico">"..."</p>
+                    <cite id="referencia-biblica"></cite>
+                </div>
+
+                <button onclick="atualizarTudo()" class="btn-ia">🔄 Gerar novo desafio</button>
+                <button class="btn-primary" onclick="concluirTarefa()">Concluir +10 pts</button>
+            </div>
+
+            <div class="card">
+                <h3>🙏 Mural de Oração</h3>
+                <div class="input-group">
+                    <input type="text" id="input-oracao" placeholder="Seu pedido...">
+                    <button onclick="adicionarPedido()">Pedir</button>
+                </div>
+                <ul id="lista-oracoes"></ul>
+            </div>
+            
+            <div class="card" id="card-aprendizado">
+                <h3>📖 Leitura e Aprendizado</h3>
+                <p>O que você aprendeu com a Palavra hoje?</p>
+                <textarea id="comentario-texto" placeholder="Ex: Hoje entendi que a graça de Deus se manifesta nas pequenas coisas..."></textarea>
+                <button class="btn-secondary" onclick="postarAprendizado()">Salvar no meu Histórico (+5 pts)</button>
+            </div>
+        </section> 
+
+        <section id="aba-biblia" class="content-section" style="display:none;">
+            <div class="card">
+                <h3>📖 Consulta Bíblica</h3>
+                <div class="biblia-controles">
+                    <select id="biblia-livro" onchange="resetarCapitulo()"></select>
+                    
+                    <div class="navegacao-capitulo">
+                        <button onclick="mudarCapitulo(-1)" class="btn-nav">⬅️</button>
+                        <input type="number" id="biblia-cap" value="1" min="1">
+                        <button onclick="mudarCapitulo(1)" class="btn-nav">➡️</button>
+                    </div>
+                    
+                    <button onclick="lerCapitulo()" class="btn-primary">Ler Capítulo</button>
+                </div>
+
+                <div id="leitura-biblica" class="leitura-container">
+                    <p>Selecione um livro e capítulo para ler.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-historico" class="content-section" style="display:none;">
+            <div class="card">
+                <h3>📜 Histórico de Desafios</h3>
+                <div id="hist-desafios" class="hist-list"></div>
+            </div>
+            <div class="card">
+                <h3>📝 Meus Aprendizados</h3>
+                <div id="hist-aprendizados" class="hist-list"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

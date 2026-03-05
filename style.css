@@ -1,0 +1,481 @@
+:root {
+    --primary: #1a3a5f;
+    --gold: #d4af37;
+    --bg: #f4f7f9;
+    --text: #333;
+}
+
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+.app-container { max-width: 450px; margin: auto; }
+
+.card { 
+    background: white; border-radius: 15px; padding: 20px; 
+    margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.user-info { display: flex; flex-direction: column; font-weight: bold; }
+.points-badge { color: var(--gold); font-size: 0.9rem; }
+
+#btn-sos { background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+.badge { background: var(--gold); color: white; display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; margin-bottom: 10px; }
+
+.versiculo-box { background: #f9f9f9; padding: 15px; border-left: 4px solid var(--gold); margin: 15px 0; font-style: italic; }
+
+.btn-primary { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+.btn-secondary { background: #ecf0f1; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; }
+
+.input-group { display: flex; gap: 5px; margin-top: 10px; }
+.input-group input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+
+ul { list-style: none; padding: 0; margin-top: 15px; }
+li { background: #fff; border-bottom: 1px solid #eee; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+.respondido { text-decoration: line-through; color: #aaa; opacity: 0.7; }
+
+/* Modal */
+.modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+.modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 15px; width: 85%; position: relative; }
+.close { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; }
+
+.btn-audio { background: #eee; border: none; padding: 8px; border-radius: 5px; cursor: pointer; margin: 5px 0; }
+.stop { color: red; }
+textarea { width: 100%; height: 60px; margin: 10px 0; padding: 10px; box-sizing: border-box; }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+.tab-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; background: #ddd; }
+.tab-btn.active { background: var(--primary); color: white; }
+
+.biblia-controles { display: flex; gap: 5px; margin-bottom: 15px; }
+.leitura-container { max-height: 300px; overflow-y: auto; text-align: left; padding: 10px; background: #fdfdfd; border: 1px solid #eee; }
+.leitura-container p { margin-bottom: 8px; line-height: 1.5; }
+
+.item-hist { padding: 10px; border-bottom: 1px solid #eee; font-size: 14px; }
+.hist-list { text-align: left; }
+#select-versao { background: white; border: 1px solid var(--gold); border-radius: 5px; padding: 5px; }
+.item-hist {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.02);
+}
+
+.item-hist strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.item-hist small {
+    color: #999;
+    display: block;
+    margin-top: 8px;
+    text-align: right;
+}
+.item-hist {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.item-hist small {
+    display: block;
+    color: #d4af37; /* Dourado */
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 5px;
+}
+
+.item-hist blockquote {
+    font-style: italic;
+    color: #555;
+    border-left: 3px solid #1a3a5f; /* Azul Marinho */
+    padding-left: 12px;
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+.item-hist p {
+    margin: 10px 0 0 0;
+    color: #333;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+.btn-ia {
+    background: #fdfaf0;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.btn-ia:hover {
+    background: #fff5d7;
+    transform: scale(1.02);
+}
+/* Garante que o container se ajuste à largura do celular */
+.app-container {
+    width: 100%;
+    max-width: 500px; /* Limita o tamanho em telas grandes */
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box; /* Evita que o padding aumente a largura */
+}
+
+/* Ajusta as abas para não ficarem espremidas */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+}
+
+.tab-btn {
+    flex: 1; /* Faz os botões dividirem o espaço igualmente */
+    padding: 10px 5px;
+    font-size: 0.9rem;
+}
+
+/* Ajusta o campo de leitura para telas pequenas */
+.leitura-container {
+    max-height: 60vh; /* Ocupa no máximo 60% da altura da tela */
+    overflow-y: auto;
+    font-size: 1.1rem; /* Melhora a leitura no celular */
+    line-height: 1.6;
+}
+
+/* Imagens e inputs responsivos */
+input, select, textarea, button {
+    width: 100%;
+    box-sizing: border-box;
+}
+.input-group { 
+    display: flex; 
+    gap: 8px; 
+    margin-bottom: 15px;
+}
+
+#input-oracao { 
+    flex: 3;
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 16px; /* Tamanho 16px evita que o iPhone dê zoom automático */
+    background: white;
+    color: #333;
+}
+
+.input-group button { 
+    flex: 1;
+    min-width: 70px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Estilo da lista de orações que vai aparecer embaixo */
+#lista-oracoes {
+    padding: 0;
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#lista-oracoes li {
+    background: #f9f9f9;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid var(--gold);
+    font-size: 14px;
+}
+.item-oracao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.texto-oracao {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Container dos botões ao lado do texto */
+.acoes-oracao {
+    display: flex;
+    gap: 10px; /* Espaço entre o Check e o X */
+    align-items: center;
+}
+
+.btn-check, .btn-remover {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto; /* Garante que não herde largura 100% */
+}
+
+.btn-check {
+    color: #2ecc71;
+}
+
+.btn-remover {
+    color: #ff7675;
+    font-size: 1rem;
+}
+
+/* Efeito de riscado quando concluída */
+.item-oracao.concluida span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.item-oracao.concluida {
+    border-left-color: #2ecc71;
+    background: #f9f9f9;
+}
+/* Container da Oração */
+.item-oracao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.texto-oracao {
+    flex: 1; /* Faz o texto ocupar o máximo de espaço */
+    margin-right: 15px;
+}
+
+/* Agrupamento dos botões (Check e X) */
+.acoes-oracao {
+    display: flex;
+    gap: 8px; /* Espaço entre os dois botões */
+    align-items: center;
+}
+
+/* Ajuste específico para que os botões NÃO fiquem gigantes */
+.acoes-oracao button {
+    width: auto !important; /* Força o botão a ter apenas o tamanho do ícone */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-check {
+    color: #2ecc71; /* Verde */
+}
+
+.btn-remover {
+    color: #ff7675; /* Vermelho suave */
+    font-size: 1rem !important;
+}
+
+/* Estilo para quando a oração for alcançada */
+.item-oracao.concluida {
+    border-left-color: #2ecc71;
+    background: #f8fff9;
+}
+
+.item-oracao.concluida span {
+    text-decoration: line-through;
+    color: #888;
+}
+.progress-card {
+    padding: 15px !important;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+    border: 1px solid #e0e6ed;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--primary);
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    width: 0%; /* O JS vai controlar isso */
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #f1c40f);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+#falta-quanto {
+    color: #7f8c8d;
+    font-size: 0.75rem;
+}
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg); /* Usa a cor de fundo do seu app */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Garante que fique no topo de tudo */
+    transition: opacity 0.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    animation: pulse 2s infinite;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0,0,0,0.1);
+    border-top: 4px solid var(--gold); /* Usa o dourado do seu tema */
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+.btn-reset {
+    background: #fff;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-reset:hover {
+    background: #e74c3c;
+    color: white;
+}
+.alerta-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff9e6; /* Amarelo bem clarinho */
+    border: 1px solid #ffeaa7;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: fadeIn 0.5s ease;
+}
+
+.alerta-box span {
+    font-size: 1.2rem;
+}
+
+.alerta-box p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #8a6d3b;
+    line-height: 1.3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Cores do Tema Claro (Padrão) */
+:root {
+    --bg: #f4f7f9;
+    --card-bg: #ffffff;
+    --text: #333333;
+    --text-light: #666666;
+    --primary: #1a3a5f;
+    --gold: #d4af37;
+    --border: #e0e6ed;
+}
+
+/* Cores do Tema Escuro */
+body.dark-mode {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --text: #e0e0e0;
+    --text-light: #b0b0b0;
+    --primary: #3a7bd5;
+    --gold: #f1c40f;
+    --border: #333333;
+}
+
+/* Aplique as variáveis nos seus elementos principais */
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+/* Seus textos secundários ou small devem usar var(--text-light) */
