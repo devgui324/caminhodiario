@@ -11,7 +11,7 @@
 
 * **🧠 Desafios Gerados por IA:** O sistema combina ações, alvos e temas para criar missões únicas a cada clique ou a cada dia.
 * **🏆 Sistema de Gamificação:** Ganhe pontos ao concluir desafios (+10) ou salvar aprendizados (+5). Evolua sua patente de *Servo Esforçado* até *Ancião da Fé*.
-* **📚 Consulta Bíblica Multi-versões:** Suporte para diferentes traduções (NVI, ARA, ACF) carregadas via JSON.
+* **📚 Consulta Bíblica Multi-versões:** Suporte para diferentes traduções (NVI e ARA) carregadas via JSON.
 * **✍️ Registro de Aprendizado:** Salve suas reflexões vinculadas diretamente ao versículo estudado com opção de excluir registros.
 * **🙏 Mural de Oração:** Espaço dedicado para registrar e acompanhar seus pedidos de oração.
 * **🌗 Tema Dinâmico:** Suporte a Modo Claro e Escuro para uma leitura confortável em qualquer ambiente.
@@ -44,6 +44,7 @@ O sistema emitirá um alerta visual caso você fique mais de 7 dias sem realizar
 Este projeto está sob a licença MIT.
 
 <p align="center">Desenvolvido com ❤️ por <a href="https://www.google.com/search?q=https://github.com/devgui324">devgui324</a></p>
+
 
 
 
