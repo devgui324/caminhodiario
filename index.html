@@ -93,6 +93,34 @@
                 <textarea id="comentario-texto" placeholder="Ex: Hoje entendi que a graça de Deus se manifesta nas pequenas coisas..."></textarea>
                 <button class="btn-secondary" onclick="postarAprendizado()">Salvar no meu Histórico (+5 pts)</button>
             </div>
+            <div id="hoje" class="tab-content">
+    
+    <div class="card">
+        <h3>💾 Gerenciar Dados</h3>
+        
+        <div id="alerta-backup" style="display: none;">
+            <div class="alerta-box">
+                <span>⚠️</span>
+                <p>Você não faz backup há uma semana. Vamos garantir que seus dados estejam salvos?</p>
+            </div>
+        </div>
+
+        <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+            Salve seus aprendizados e orações ou limpe tudo para recomeçar.
+        </p>
+        
+        <div style="display: flex; gap: 10px; flex-direction: column;">
+            <button onclick="exportarBackup()" class="btn-secondary">📤 Exportar Backup</button>
+            
+            <label for="import-file" class="btn-ia" style="text-align: center; display: block; width: 100%; max-width: 100%; box-sizing: border-box; margin-bottom: 0; cursor: pointer; white-space: normal; word-wrap: break-word;">
+                📥 Importar Backup
+            </label>
+            <input type="file" id="import-file" style="display: none;" onchange="importarBackup(event)">
+
+            <button onclick="resetarTudo()" class="btn-reset">⚠️ Resetar Tudo</button>
+        </div>
+    </div>
+</div>
         </section> 
 
         <section id="aba-biblia" class="content-section" style="display:none;">
@@ -127,35 +155,11 @@
             </div>
         </section>
     </div>
-    <div class="card">
-    <h3>💾 Gerenciar Dados</h3>
-    
-    <div id="alerta-backup" style="display: none;">
-        <div class="alerta-box">
-            <span>⚠️</span>
-            <p>Você não faz backup há uma semana. Vamos garantir que seus dados estejam salvos?</p>
-        </div>
-    </div>
-
-    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
-        Salve seus aprendizados e orações ou limpe tudo para recomeçar.
-    </p>
-    
-    <div style="display: flex; gap: 10px; flex-direction: column;">
-        <button onclick="exportarBackup()" class="btn-secondary">📤 Exportar Backup</button>
-        
-        <label for="import-file" class="btn-ia" style="text-align: center; display: block; width: 100%; max-width: 100%; box-sizing: border-box; margin-bottom: 0; cursor: pointer; white-space: normal; word-wrap: break-word;">
-            📥 Importar Backup
-        </label>
-        <input type="file" id="import-file" style="display: none;" onchange="importarBackup(event)">
-
-        <button onclick="resetarTudo()" class="btn-reset">⚠️ Resetar Tudo</button>
-    </div>
-</div>
-
+   
     <script src="script.js"></script>
 </body>
 
 </html>
+
 
 
