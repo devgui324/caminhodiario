@@ -20,15 +20,11 @@
     </script>
 </head>
 <body>
-<div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-    <button onclick="alternarTema()" id="btn-tema" class="btn-secondary" style="width: auto !important;">
-        🌙 Modo Escuro
-    </button>
-</div>
+
 
     <div id="loading-screen">
         <div class="loading-content">
-            <img src="seu-icone.png" alt="Logo" class="loading-logo">
+            <img src="icone.png" alt="Logo" class="loading-logo">
             <div class="spinner"></div>
             <p>Preparando seu devocional...</p>
         </div>
@@ -42,7 +38,6 @@
             </div>
             <select id="select-versao" onchange="trocarVersao()">
                 <option value="nvi">NVI</option>
-                <option value="acf">ACF</option>
                 <option value="aa">ARA</option>
             </select>
         </header>
@@ -54,6 +49,7 @@
         </nav>
 
         <section id="aba-hoje" class="content-section">
+            
             <div class="card progress-card">
                 <div class="progress-info">
                     <span id="label-nivel">Nível: 🌱 Servo Esforçado</span>
@@ -74,7 +70,7 @@
                     <cite id="referencia-biblica"></cite>
                 </div>
 
-                <button onclick="atualizarTudo()" class="btn-ia">🔄 Gerar novo desafio</button>
+                <button onclick="gerarNovoDesafio()" class="btn-ia">🔄 Gerar novo desafio</button>
                 <button class="btn-primary" onclick="concluirTarefa()">Concluir +10 pts</button>
             </div>
 
@@ -155,11 +151,8 @@
             </div>
         </section>
     </div>
-   
+    
+
     <script src="script.js"></script>
 </body>
-
 </html>
-
-
-
